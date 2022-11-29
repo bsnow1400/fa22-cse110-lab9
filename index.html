@@ -86,7 +86,13 @@
       <button>Trigger a Global Error</button>
     </section>
   </main>
-
+  <script src="https://cdn.trackjs.com/agent/v3/latest/t.js"></script>
+  <script>
+    window.TrackJS && TrackJS.install({ 
+      token: "ce2b0a193c9841be83e14d440a718f69"
+      // for more configuration options, see https://docs.trackjs.com
+    });
+  </script>
   <script>
     let form = document.querySelector('form');
     form.addEventListener('submit', e => {
@@ -102,6 +108,114 @@
 
     // Start your code here
     // You may move this JS to another file if you wish
+
+    const log = errorBtns[0];
+    log.addEventListener('click', () => {
+      console.log("Console Log demo");
+    });
+
+    const error = errorBtns[1];
+    error.addEventListener('click', () => {
+      console.error("Console Error demo");
+    });
+
+    const count = errorBtns[2];
+    count.addEventListener('click', () => {
+      console.count("Console Count demo");
+    });
+
+    const warn = errorBtns[3];
+    warn.addEventListener('click', () => {
+      console.warn("Console Warn demo");
+    });
+
+    const assert = errorBtns[4];
+    assert.addEventListener('click', () => {
+      var rand = Math.floor(Math.random() * 11);
+      const errorMsg = "the number is not equal to 3";
+      console.assert(rand == 3, '%o', { rand, errorMsg });
+    });
+
+    const clear = errorBtns[5];
+    clear.addEventListener('click', () => {
+      console.clear();
+    });
+
+    const dir = errorBtns[6];
+    dir.addEventListener('click', () => {
+      console.dir(dir);
+    });
+
+    const xml = errorBtns[7];
+    xml.addEventListener('click', () => {
+      console.dirxml(xml);
+    });
+
+    const gStart = errorBtns[8];
+    gStart.addEventListener('click', () => {
+      console.group("Start");
+    });
+
+    const gEnd = errorBtns[9];
+    gEnd.addEventListener('click', () => {
+      console.groupEnd();
+    });
+
+    const table = errorBtns[10];
+    table.addEventListener('click', () => {
+      console.table(["this","works", "as", "it", "should"]);
+    });
+
+    const timeStart = errorBtns[11];
+    timeStart.addEventListener('click', () => {
+      console.time("Timer");
+    });
+
+    const timeEnd = errorBtns[12];
+    timeEnd.addEventListener('click', () => {
+      console.timeEnd("Timer");
+    });
+
+    let trace = errorBtns[13];
+	  trace.addEventListener('click', function handleBtnClick(){
+		function deep(){
+			function deeper(){
+				function deepest(){
+					console.trace();
+				}
+				deepest();
+			}
+			deeper();
+		}
+		deep();
+	});
+
+  let globalError = errorBtns[14];
+	globalError.addEventListener('click', function globalTrigger(){
+		console.log(notDefined);
+	});
+
+  function notString(input){
+    if(typeof(input) != 'string'){
+      return input;
+    }
+    else{
+      throw new Error("Invalid Character in Calculator");
+    }
+  }
+  try{
+    notString(-1);
+  } catch (err){
+    console.log(err);
+  } finally{
+    console.log("Start");
+  }
+
+  window.onerror = (event, source, lineno, colno, error) => {
+		console.log("Sadly an error happened my friend");
+	};
+
+  
   </script>
 </body>
 
